@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Финансы самозанятого{% endblock %}</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 20px auto; padding: 0 16px; }
+    nav a { margin-right: 14px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
+    .msg { padding: 8px 12px; margin: 8px 0; border-radius: 4px; }
+    .success { background: #dff0d8; }
+    .error { background: #f8d7da; }
+    form.inline { display: inline; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'home' %}">Главная</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'income_list' %}">Доходы</a>
+      <a href="{% url 'expense_list' %}">Расходы</a>
+      <a href="{% url 'client_list' %}">Клиенты</a>
+      <a href="{% url 'category_list' %}">Категории</a>
+      <form class="inline" method="post" action="{% url 'logout' %}">
+        {% csrf_token %}<button type="submit">Выйти ({{ user.username }})</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}">Войти</a>
+      <a href="{% url 'register' %}">Регистрация</a>
+    {% endif %}
+  </nav>
+  <hr>
+  {% for message in messages %}
+    <div class="msg {{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</body>
+</html>
