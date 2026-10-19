@@ -1,11 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
 <h1>Финансовый учёт для самозанятых</h1>
 {% if user.is_authenticated %}
-  <p>Привет, {{ user.username }}!</p>
-  <form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Выйти</button>
-  </form>
+  <p>Привет, {{ user.username }}! Выберите раздел в меню.</p>
 {% else %}
-  <a href="{% url 'login' %}">Войти</a> |
-  <a href="{% url 'register' %}">Регистрация</a>
+  <p>Войдите или зарегистрируйтесь, чтобы начать.</p>
 {% endif %}
+{% endblock %}

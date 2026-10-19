@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Доходы</h2>
+<a href="{% url 'income_create' %}">+ Добавить доход</a>
+<table>
+  <tr><th>Дата</th><th>Клиент</th><th>Сумма</th><th>Описание</th><th></th></tr>
+  {% for i in incomes %}
+  <tr>
+    <td>{{ i.date|date:"d.m.Y" }}</td>
+    <td>{{ i.client }}</td>
+    <td>{{ i.amount }} {{ i.currency }}</td>
+    <td>{{ i.description }}</td>
+    <td>
+      <form class="inline" method="post" action="{% url 'income_delete' i.pk %}">
+        {% csrf_token %}<button type="submit">Удалить</button>
+      </form>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="5">Доходов пока нет.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
